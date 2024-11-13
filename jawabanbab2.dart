@@ -161,6 +161,21 @@ class Proyek {
     }
   }
 }
+// Fungsi untuk menghitung kontribusi karyawan tetap dan kontrak
+double hitungKontribusi(List<Karyawan> karyawanAktif, String jenisKaryawan) {
+  int totalKaryawan = karyawanAktif.length;
+  int jumlahKaryawanJenis = karyawanAktif.where((karyawan) {
+    if (jenisKaryawan == 'tetap') {
+      return karyawan is KaryawanTetap;
+    } else if (jenisKaryawan == 'kontrak') {
+      return karyawan is KaryawanKontrak;
+    }
+    return false;
+  }).toList().length;
+
+  // Menghitung kontribusi dalam bentuk persentase
+  return (jumlahKaryawanJenis / totalKaryawan) * 100;
+}
 
 void main() {
   // Produk
@@ -197,15 +212,10 @@ void main() {
   perusahaan.tambahKaryawan(karyawan2);
   perusahaan.tambahKaryawan(karyawan3);
 
-  // Menampilkan jumlah karyawan aktif di perusahaan
-  print("Jumlah karyawan aktif: ${perusahaan.karyawanAktif.length}");
-
-  // Membuat proyek baru
-  var proyek = Proyek("Proyek Transformasi Digital");
-  proyek.tambahAnggotaTim(karyawan1);
-  proyek.tambahAnggotaTim(karyawan2);
-  proyek.tambahAnggotaTim(karyawan3);
-
-  // Lanjutkan fase proyek jika memenuhi syarat
-  proyek.lanjutKeFaseBerikutnya();
+  // Menampilkan kontribusi karyawan tetap dan kontrak
+  double kontribusiTetap = hitungKontribusi(perusahaan.karyawanAktif, 'tetap');
+  double kontribusiKontrak = hitungKontribusi(perusahaan.karyawanAktif, 'kontrak');
+  
+  print("Kontribusi Karyawan Tetap: ${kontribusiTetap.toStringAsFixed(2)}%");
+  print("Kontribusi Karyawan Kontrak: ${kontribusiKontrak.toStringAsFixed(2)}%");
 }
