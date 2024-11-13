@@ -118,7 +118,14 @@ class Produk {
     if (kategori == "NetworkAutomation" && jumlahTerjual > 50) {
       double hargaDiskon = harga * 0.15;
       harga = hargaDiskon >= 200000 ? hargaDiskon : 200000;
-      print("Harga setelah diskon: $harga");
+      print("Harga setelah diskon untuk NetworkAutomation: Rp${harga}");
+    } else if (kategori == "DataManagement" && jumlahTerjual > 30) {
+      // Diskon 10% untuk kategori DataManagement jika terjual lebih dari 30 unit
+      double hargaDiskon = harga * 0.10;
+      harga -= hargaDiskon;
+      print("Harga setelah diskon untuk DataManagement: Rp${harga}");
+    } else {
+      print("Produk ${namaProduk} tidak memenuhi syarat untuk diskon.");
     }
   }
 }
@@ -166,7 +173,10 @@ void main() {
 
   // Terapkan diskon jika memenuhi syarat
   produk2.jumlahTerjual = 60; // Misal produk2 sudah terjual lebih dari 50 unit
-  produk2.terapkanDiskon();
+  produk2.terapkanDiskon();  // Menampilkan diskon pada produk2
+
+  produk1.jumlahTerjual = 35;  // Produk1 sudah terjual lebih dari 30 unit
+  produk1.terapkanDiskon();  // Menampilkan diskon pada produk1
 
   // Membuat beberapa karyawan
   var karyawan1 = KaryawanTetap("Farida Rustam", umur: 19, peran: "Pengembang");
